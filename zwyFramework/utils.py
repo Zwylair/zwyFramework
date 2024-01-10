@@ -1,6 +1,9 @@
-from typing import Literal
+import io
+import os
+import hashlib
 import sqlite3
 import traceback
+from typing import Literal
 
 
 class Column:
@@ -70,3 +73,17 @@ def get_sqlite_dumps(cursor: sqlite3.Cursor) -> tuple[SQLiteDump, ...]:
 def format_exception(exception: BaseException) -> str:
     formatted_exception = traceback.format_exception(type(exception), exception, exception.__traceback__)
     return ''.join(formatted_exception)
+
+
+def calculate_sha256(filepath: str | os.PathLike | bytes | io.BytesIO) -> str:
+    sha256_hash = hashlib.sha256()
+
+    if isinstance(filepath, (str, os.PathLike)):
+        with open(filepath, 'rb') as file:
+            for chunk in iter(lambda: file.read(4096), b''):
+                sha256_hash.update(chunk)
+
+    elif isinstance(filepath, (io.BytesIO, bytes)):
+        sha256_hash.update(filepath)
+
+    return sha256_hash.hexdigest()
