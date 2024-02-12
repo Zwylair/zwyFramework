@@ -72,7 +72,7 @@ def get_sqlite_dumps(cursor: sqlite3.Cursor) -> tuple[SQLiteDump, ...]:
 
 def format_exception(exception: BaseException) -> str:
     formatted_exception = traceback.format_exception(type(exception), exception, exception.__traceback__)
-    return ''.join(formatted_exception)
+    return ''.join(formatted_exception).rstrip('\n')
 
 
 def calculate_sha256(filepath: str | os.PathLike | bytes | io.BytesIO) -> str:

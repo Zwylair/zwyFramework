@@ -9,6 +9,8 @@ setup(
     description="Zwy's tools for more comfortable codding",
     url='https://github.com/Zwylair/zwyFramework',
     install_requires=[
-        # List of dependencies
+        'requests~=2.31.0',
+        'fake_useragent~=1.4.0',
+        'flask==3.0.0',
     ]
 )
